@@ -9,7 +9,6 @@ from .managers import CustomUserManager
 class CustomUser(AbstractUser):
     inn = models.CharField(
         _("ИНН"),
-        blank=False,
         max_length=10,
         unique=True,
         validators=[RegexValidator(regex='^\d{10}$', message='Should be 10 digits number')],
