@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from account import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('transactions/', views.TransactionView.as_view(), name='transactions'),
+    path('usersaccounts/', views.UserAccountsView.as_view(), name='usersaccounts-list'),
 ]

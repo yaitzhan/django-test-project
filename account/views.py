@@ -1,14 +1,21 @@
+from django.views.generic.edit import FormView
+from django.views.generic.list import ListView
+
+from .forms import TransactionForm
 from .models import CustomUser
 
-from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.response import Response
-from rest_framework.views import APIView
+
+class TransactionView(FormView):
+    form_class = TransactionForm
+    template_name = 'transaction.html'
+    success_url = '/usersaccounts/'
+
+    def form_valid(self, form):
+        form.process_transaction()
+        return super().form_valid(form)
 
 
-class ProfileList(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'users.html'
+class UserAccountsView(ListView):
+    model = CustomUser
+    template_name = 'useraccounts.html'
 
-    def get(self, request):
-        queryset = CustomUser.objects.all()
-        return Response({'users': queryset})
