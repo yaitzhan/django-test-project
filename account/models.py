@@ -3,15 +3,20 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 
+from .managers import CustomUserManager
+
 
 class CustomUser(AbstractUser):
     inn = models.CharField(
         _("ИНН"),
+        blank=False,
         max_length=10,
         unique=True,
         validators=[RegexValidator(regex='^\d{10}$', message='Should be 10 digits number')],
     )
     account = models.DecimalField(_("Счет"), max_digits=11, decimal_places=2, default=0)  # max -> 999 999 999,99
+
+    objects = CustomUserManager()
 
     class Meta:
         verbose_name = _("Пользователь")
