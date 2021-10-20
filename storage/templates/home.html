@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% block content_header %}
+<h2>Simple Storage Service</h2>
+{% endblock %}
+    <ul>
+        <li>
+            <a href="{% url 'file-upload' %}">File Upload</a>
+        </li>
+    </ul>
+    <p>Uploaded files:</p>
+    <ul>
+        {% for obj in files %}
+        <li>
+            <a href="{% url 'file-download' file_id=obj.id %}">{{ obj.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
