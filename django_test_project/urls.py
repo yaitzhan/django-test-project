@@ -17,9 +17,15 @@ from django.contrib import admin
 from django.urls import path
 
 from account import views
+from storage import views as storage_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('transactions/', views.TransactionView.as_view(), name='transactions'),
     path('usersaccounts/', views.UserAccountsView.as_view(), name='usersaccounts-list'),
+
+    path('', storage_views.HomeView.as_view(), name='home'),
+    path('fileupload/', storage_views.FileUploadView.as_view(), name='file-upload'),
+    path('filedownload/<int:file_id>/', storage_views.FileDownloadView.as_view(), name='file-download')
 ]
