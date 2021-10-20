@@ -2,10 +2,13 @@ import os
 import zipfile
 import uuid
 import json
+import logging
 
 from django.conf import settings
 
 FILE_COUNT = 16
+
+logger = logging.getLogger('app-logger')
 
 
 # TODO change with custom FileUploadHandler + source file deletion after upload
@@ -28,7 +31,7 @@ def split_n_zip_upload_file(file_path: str, file_size: int) -> list:
                 zipf.writestr(buff_file_name, chunk)
 
             result.append(zip_file_name)
-
+    logger.info('Splitted upload file')
     return result
 
 
@@ -39,3 +42,4 @@ def combine_result_file_from_zips(zip_list_str: str, file_name):
             with zipfile.ZipFile(os.path.join(settings.MEDIA_ROOT, file), 'r') as zipf:
                 with zipf.open(file.split('.')[0]) as ff:
                     fff.write(ff.read())
+    logger.info('Generated file')

@@ -35,6 +35,7 @@ class FileUploadView(CreateView):
 
 class FileDownloadView(View):
     def get(self, request, file_id):
+        logger.info(f'Requested file from storage {file_id}')
         file_obj = FileUpload.objects.get(id=file_id)
         file_sequence_obj = FileUploadSequence.objects.get(file_upload__pk=file_id)
 
@@ -49,9 +50,10 @@ class FileDownloadView(View):
                 response = HttpResponse(content, content_type=file_content_type)
                 response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
             try:
-                logger.info('The file downloaded')
+                logger.info('Returned generated response file')
                 return response
             finally:
+                logger.info('Removed generated response file')
                 os.remove(file_path)
         else:
             raise HttpResponseNotFound

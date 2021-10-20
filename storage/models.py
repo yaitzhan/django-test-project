@@ -22,8 +22,8 @@ class FileUploadSequence(models.Model):
     sequence = models.TextField()
 
     class Meta:
-        verbose_name = _("Zip Файл")
-        verbose_name_plural = _("Zip Файлы")
+        verbose_name = _("Последовательность zip-файлов")
+        verbose_name_plural = _("Последовательности zip-файлов")
 
     def __str__(self):
         return self.file_upload.name
