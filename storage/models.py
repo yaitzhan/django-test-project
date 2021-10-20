@@ -16,12 +16,6 @@ class FileUpload(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        print(self.__dict__)
-        print(self.upload.__dict__)
-        print(self.upload.file.content_type)
-        super(FileUpload, self).save(*args, **kwargs)
-
 
 class FileUploadSequence(models.Model):
     file_upload = models.ForeignKey(FileUpload, on_delete=models.CASCADE, related_name="zip_files")
